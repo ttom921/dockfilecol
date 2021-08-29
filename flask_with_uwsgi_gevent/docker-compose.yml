@@ -1,0 +1,31 @@
+version: "2"
+
+services:
+  uwsgi-buster:
+    build: ./uwsgi-gevent-buster
+    image: uwsgi-gevent:buster
+    privileged: true
+    restart: always
+    volumes:
+      - ./src:/app
+      - /tmp:/tmp
+    ports:
+      - 80:80
+    environment:
+      - LOG_LEVEL=DEBUG
+      - PROCESSES=2
+      - THREADS=10
+      - GEVENT=1
+      - GEVENT_NUMS=100
+      - AWS_ACCESS_KEY_ID=test_key
+      - AWS_SECRET_ACCESS_KEY=test_secret
+      - ENV=LOCAL
+      - DYNAMODB_TABLE=ut_table
+    entrypoint:
+      - sh
+      - -c
+      - "/app/entrypoint.sh"
+    ulimits:
+      nofile:
+        soft: 98304
+        hard: 98304
