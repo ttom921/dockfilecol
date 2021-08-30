@@ -1,3 +1,5 @@
+# sudo docker build --tag ttom/nginx-uwsgi-gevent:3.6 .
+
 FROM python:3.6
 LABEL maintainer="s8901489@gmail.com"
 
@@ -50,9 +52,8 @@ EXPOSE 80 443
 CMD /usr/sbin/nginx -g "daemon off;"
 
 RUN apt-get update \
-    && apt-get install -y netcat \
     && pip install --upgrade pip \
-    && pip install --no-cache-dir uwsgi gevent flask boto3 pytest simplejson\
+    && pip install --no-cache-dir uwsgi gevent flask \
     && rm -rf /tmp/*
 
 # Copy the base uWSGI ini file to enable default dynamic uwsgi process number

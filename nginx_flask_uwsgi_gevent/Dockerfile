@@ -1,15 +1,15 @@
-# sudo docker build -f Dockerfile -t gevent_webfms .
+# sudo docker build -f Dockerfile -t webfms:python3.6  .
 
-# 使用官方的 Python 執行環境作為基本的 Docker 影像
-FROM nginx-uwsgi-gevent:3.6
+# 使用自制的 Python 執行環境作為基本的 Docker 影像
+FROM ttom/nginx-uwsgi-gevent:3.6
 
 # Custom Supervisord config
 COPY resources/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
 # install pip modules
 RUN pip install flask PyYAML pynng
-#COPY resources/requirements.txt ./
-#RUN pip install --no-cache-dir -r requirements.txt
+COPY resources/requirements.txt ./
+RUN pip install --no-cache-dir -r requirements.txt
 
 # Add demo app
 COPY ./app /app

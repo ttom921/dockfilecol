@@ -1,11 +1,11 @@
 version: '3.4'
 services:
-  webgevent:
-    image: gevent_webfms
+  webfms2:
+    image: webfms:python3.6
     restart: "no"
     #restart: always
-    hostname: webgevent
-    container_name: webgevent
+    hostname: webfms2
+    container_name: webfms2
     ports:
       - "80:80"
       #- "443:443"
