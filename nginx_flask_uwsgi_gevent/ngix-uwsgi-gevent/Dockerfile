@@ -29,11 +29,11 @@ RUN cd /tmp/build/nginx/${NGINX_VERSION} && \
         --pid-path=/var/run/nginx/nginx.pid \
         --lock-path=/var/lock/nginx/nginx.lock \
         --http-log-path=/var/log/nginx/access.log \
-        --http-client-body-temp-path=/temp/nginx/client_temp \
-        --http-proxy-temp-path=/temp/nginx/proxy_temp \
-        --http-fastcgi-temp-path=/temp/nginx/fastcgi_temp \ 
-        --http-uwsgi-temp-path=/temp/nginx/uwsgi_temp \
-        --http-scgi-temp-path=/temp/nginx/scgi_temp \
+        --http-client-body-temp-path=/var/cache/nginx/client_temp \
+        --http-proxy-temp-path=/var/cache/nginx/proxy_temp \
+        --http-fastcgi-temp-path=/var/cache/nginx/fastcgi_temp \ 
+        --http-uwsgi-temp-path=/var/cache/nginx/uwsgi_temp \
+        --http-scgi-temp-path=/var/cache/nginx/scgi_temp \
         --with-compat \ 
         --with-file-aio \ 
         --with-threads \
