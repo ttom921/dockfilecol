@@ -1,4 +1,4 @@
-# sudo docker build -f Dockerfile -t webfms:python3.6  .
+# sudo docker build -f Dockerfile -t webfms:python3.6  . --no-cache
 
 # 使用自制的 Python 執行環境作為基本的 Docker 影像
 FROM ttom/nginx-uwsgi-gevent:3.6
