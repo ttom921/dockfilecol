@@ -1,0 +1,52 @@
+[uwsgi]
+chdir = /app
+#module = server:app
+module = run:app
+auto-procname = true        # 顯示worker的名字
+vacuum = true        		# Delete sockets during shutdown
+die-on-term = true      	# Shutdown when receiving SIGTERM (default is respawn)
+thunder-lock = true
+# 并發設置
+enable-threads = true
+#processes = 4
+workers = 4 				# 一般為CPU核數*2 workers和processes是一樣的意思
+threads = 20				# 線程比進開銷更小
+
+# 重啟設定
+master = true         		# 使用max-request必須采用這個選項
+max-requests = 10000 		# 處理里多少請求後重啟worker,目的是防止內存泄露
+max-worker-lifetime = 3600  # 3600秒後會重啟worker
+reload-on-rss = 2048        # Restart workers after this much resident memory
+worker-reload-mercy = 60    # How long to wait before forcefully killing workers
+harakiri = 60               # 超過60s的請求會kill
+http-websockets = true
+# gevent-monkey-patch = true
+# gevent = 1024
+py-autoreload = 3     #Release時要拿掉
+
+# 權限設定
+chmod-socket = 660
+#chown-socket = www-data:www-data
+uid = www-data
+gid = www-data
+
+
+
+#stats = 127.0.0.1:5000
+socket = /tmp/uwsgi.sock
+#daemonize=/var/log/uwsgi/uwsgi.log
+
+post-buffering = 16384    #沒這行會一直有502錯誤
+buffer-size = 131072
+
+#開啟log
+log-maxsize = 100000000
+logto = /tmp/uwsgi_0.5.log
+log-master = true
+threaded-log = true
+
+#要Debug才能開啟
+catch-exceptions = true
+
+#加入可看到proxy後IP
+log-x-forwarded-for = true

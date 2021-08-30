@@ -1,0 +1,101 @@
+server {
+   #        listen 80;
+   #    listen 443 ssl;
+   # ---真實IP---------------
+   listen 80 proxy_protocol; #負責解開data資訊
+   listen 443 ssl http2  proxy_protocol;
+   
+   # ---真實IP---------------
+   set_real_ip_from 172.30.0.0/16;
+   real_ip_header  proxy_protocol;
+   proxy_http_version 1.1;
+   proxy_set_header Connection "";
+   proxy_set_header X-Real-IP       $proxy_protocol_addr;
+   proxy_set_header X-Forwarded-For $proxy_protocol_addr;
+   
+   
+   # location @app {
+   #     include uwsgi_params;
+   #     uwsgi_pass unix:///tmp/uwsgi.sock;
+   # }
+
+    
+    server_name nvtfms.com www.nvtfms.com ;
+	
+
+#    ssl on;      #開啟的話只能使用https
+    ssl_certificate      /etc/nginx/fullchain.pem;
+    ssl_certificate_key  /etc/nginx/privkey.pem;
+    ssl_session_timeout 5m;
+    ssl_ciphers ALL:!aNULL:!EXPORT56:RC4+RSA:+HIGH:+MEDIUM:+LOW:+SSLv2:+EXP;
+    
+    ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
+    ssl_prefer_server_ciphers on;
+
+    uwsgi_ignore_client_abort on;
+    uwsgi_read_timeout 300;
+    uwsgi_send_timeout 300;
+    proxy_connect_timeout 120;
+    proxy_read_timeout 300;
+    proxy_send_timeout 120;
+    limit_conn addr 2048;
+
+
+    #error_page 404 /404.html;
+
+    #location = /404.html {
+    #   root /usr/share/nginx/html/;
+    #   allow   all;
+    #}
+
+    location / {
+        alias /usr/share/nginx/html/;
+        try_files $uri $uri/ /index.html;
+#        root /usr/share/nginx/html/;
+#        index index.html index.htm;
+    }
+    
+  
+    #v0.5版的html Server
+    location /fmsserver {
+        alias /usr/share/nginx/htfmsserver05/;
+        try_files $uri $uri/ /fmsserver/index.html;
+
+    }
+
+	# Let’s Encrypt相關 
+    location ^~ /.well-known/acme-challenge/ {
+       default_type "text/plain";
+       root /usr/share/nginx/letsencrypt;
+    }
+
+    location ^~ /fws {
+       root /usr/share/nginx/html/;
+    }
+
+    location ^~ /events {
+       root /usr/share/nginx/html/;
+    }
+
+    location ^~ /event/images {
+       root /usr/share/nginx/html/;
+    }
+
+    #查詢 ngx_http_secure_link_module 用法
+    location ^~ /event/gops {
+       root /usr/share/nginx/html/;
+       index index.html index.htm;
+       secure_link $arg_md5,$arg_expires;
+       secure_link_md5 4dL8zaNyD8FdITaS$uri$arg_expires;
+       if ($secure_link = "") {
+          return 403;
+       }
+
+       if ($secure_link = "0") {
+          return 410;
+       }
+    }
+
+    include /etc/nginx/location_v0.5.conf;
+
+}

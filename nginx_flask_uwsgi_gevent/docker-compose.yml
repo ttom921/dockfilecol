@@ -1,0 +1,36 @@
+version: '3.4'
+services:
+  webgevent:
+    image: gevent_webfms
+    restart: "no"
+    #restart: always
+    hostname: webgevent
+    container_name: webgevent
+    ports:
+      - "80:80"
+      #- "443:443"
+
+    volumes:
+      # ---------------- code  ----------------
+      - ~/server.viewtec/code:/app
+      #- /media/vdisk:/media/vdisk
+      # - /media/vdisk/fws:/media/vdisk/fws
+      # - ~/docker/uwsgi/webfms.conf:/etc/nginx/conf.d/webfms.conf
+      # ---------------- nginx  ----------------
+      #- ~/docker/uwsgi/docker_config/nginx.conf:/etc/nginx/nginx.conf 在app的目錄下
+      - /tmp:/var/cache/nginx
+      - ./docker_config/nginx.conf:/app/nginx.conf
+      - ./docker_config/server.conf:/etc/nginx/server.conf
+      #- ./docker_config/location_v0.5.conf:/etc/nginx/location_v0.5.conf
+      - ./docker_config/uwsgi.ini:/app/uwsgi.ini
+      - ./docker_config/uwsgi.ini:/etc/uwsgi/uwsgi.ini
+      # -----------------log -------------------
+      - /tmp:/var/log/nginx
+      - /tmp:/var/log/supervisor
+      - /tmp:/tmp
+
+
+    #ulimits:
+    #  nofile:
+    #    soft: 98304
+    #    hard: 98304
