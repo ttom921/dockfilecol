@@ -1,7 +1,7 @@
 # sudo docker build -f Dockerfile -t webfms:python3.6  . --no-cache
 
 # 使用自制的 Python 執行環境作為基本的 Docker 影像
-FROM ttom/nginx-uwsgi-gevent:3.6
+FROM ttom921/nginx-uwsgi-gevent:3.6
 
 # Custom Supervisord config
 COPY resources/supervisord.conf /etc/supervisor/conf.d/supervisord.conf

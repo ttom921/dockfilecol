@@ -1,4 +1,4 @@
-# sudo docker build --tag ttom/nginx-uwsgi-gevent:3.6 . --no-cache
+# sudo docker build --tag ttom921/nginx-uwsgi-gevent:3.6 . --no-cache
 
 FROM python:3.6
 LABEL maintainer="s8901489@gmail.com"
