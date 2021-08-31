@@ -45,8 +45,7 @@ RUN cd /tmp/build/nginx/${NGINX_VERSION} && \
         --with-threads \
         --with-http_addition_module \ 
         --with-http_auth_request_module \
-        --with-http_dav_module=dynamic \
-        --with-http_flv_module=dynamic \
+        --with-http_flv_module \
         --with-http_gunzip_module \ 
         --with-http_gzip_static_module \
         --with-http_mp4_module \
