@@ -79,6 +79,7 @@ RUN ln -sf /dev/stdout /var/log/nginx/access.log && \
 # 設定nginx的pid權限
 RUN mkdir -p /var/cache/nginx
 RUN touch /var/run/nginx/nginx.pid \
+    && chown www-data:www-data /var/run/nginx.pid \
     && chown -R www-data:www-data /var/run/nginx/nginx.pid /var/cache/nginx
 
 
