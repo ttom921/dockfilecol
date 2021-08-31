@@ -76,6 +76,11 @@ RUN ln -sf /dev/stdout /var/log/nginx/access.log && \
 # Remove default configuration from Nginx
 #RUN rm /etc/nginx/conf.d/default.conf
 
+# 設定nginx的pid權限
+RUN touch /var/run/nginx/nginx.pid \
+    && chown -R www-data:www-data /var/run/nginx/nginx.pid /var/cache/nginx
+
+
 EXPOSE 80 443 
 
 CMD /usr/sbin/nginx -g "daemon off;"
