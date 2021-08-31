@@ -80,7 +80,7 @@ RUN ln -sf /dev/stdout /var/log/nginx/access.log && \
 RUN mkdir -p /var/cache/nginx
 RUN chown -R www-data:www-data /var/cache/nginx
 RUN touch /var/run/nginx/nginx.pid 
-RUN chown www-data:www-data /var/run/nginx.pid
+RUN chown www-data:www-data /var/run/nginx/nginx.pid
 
 
 
