@@ -24,6 +24,7 @@ RUN mkdir -p /tmp/build/nginx && \
 RUN cd /tmp/build/nginx/${NGINX_VERSION} && \
     ./configure \
         --sbin-path=/usr/sbin/nginx \
+		--modules-path=/usr/lib/nginx/modules \
         --conf-path=/etc/nginx/nginx.conf \
         --error-log-path=/var/log/nginx/error.log \
         --pid-path=/var/run/nginx/nginx.pid \
@@ -34,8 +35,13 @@ RUN cd /tmp/build/nginx/${NGINX_VERSION} && \
         --http-fastcgi-temp-path=/var/cache/nginx/fastcgi_temp \ 
         --http-uwsgi-temp-path=/var/cache/nginx/uwsgi_temp \
         --http-scgi-temp-path=/var/cache/nginx/scgi_temp \
+		--user=www-data \
+        --group=www-data \
         --with-compat \ 
         --with-file-aio \ 
+		--with-pcre \
+		--with-pcre-jit \
+		--with-openssl-opt=no-nextprotoneg 
         --with-threads \
         --with-http_addition_module \ 
         --with-http_auth_request_module \
@@ -52,10 +58,11 @@ RUN cd /tmp/build/nginx/${NGINX_VERSION} && \
         --with-http_stub_status_module \ 
         --with-http_sub_module \
         --with-http_v2_module \
+		--with-http_xslt_module=dynamic \
         --with-ipv6 \
+		--with-stream=dynamic \
         --with-stream_realip_module \
         --with-stream_ssl_preread_module \
-		--with-stream \
 		--with-stream_ssl_module && \
 	make -j $(getconf _NPROCESSORS_ONLN) && \
     make install && \
@@ -75,7 +82,7 @@ CMD /usr/sbin/nginx -g "daemon off;"
 
 RUN apt-get update \
     && pip install --upgrade pip \
-    && pip install --no-cache-dir uwsgi gevent flask \
+    && pip install uwsgi gevent flask --no-cache-dir \
     && rm -rf /tmp/*
 
 # Copy the base uWSGI ini file to enable default dynamic uwsgi process number
