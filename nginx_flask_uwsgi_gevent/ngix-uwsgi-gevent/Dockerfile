@@ -27,7 +27,7 @@ RUN cd /tmp/build/nginx/${NGINX_VERSION} && \
 		--modules-path=/usr/lib/nginx/modules \
         --conf-path=/etc/nginx/nginx.conf \
         --error-log-path=/var/log/nginx/error.log \
-        --pid-path=/var/run/nginx/nginx.pid \
+        --pid-path=/var/run/nginx.pid \
         --lock-path=/var/lock/nginx/nginx.lock \
         --http-log-path=/var/log/nginx/access.log \
         --http-client-body-temp-path=/var/cache/nginx/client_temp \
@@ -78,8 +78,8 @@ RUN ln -sf /dev/stdout /var/log/nginx/access.log && \
 # 設定nginx的pid權限
 RUN mkdir -p /var/cache/nginx
 RUN chown -R www-data:www-data /var/cache/nginx
-RUN touch /var/run/nginx/nginx.pid 
-RUN chmod 777 /var/run/nginx/nginx.pid
+RUN touch /var/run/nginx.pid 
+RUN chmod 777 /var/run/nginx.pid
 
 
 
