@@ -45,8 +45,8 @@ RUN cd /tmp/build/nginx/${NGINX_VERSION} && \
         --with-threads \
         --with-http_addition_module \ 
         --with-http_auth_request_module \
-        --with-http_dav_module \
-        --with-http_flv_module \
+        --with-http_dav_module=dynamic \
+        --with-http_flv_module=dynamic \
         --with-http_gunzip_module \ 
         --with-http_gzip_static_module \
         --with-http_mp4_module \
@@ -78,9 +78,10 @@ RUN ln -sf /dev/stdout /var/log/nginx/access.log && \
 
 # 設定nginx的pid權限
 RUN mkdir -p /var/cache/nginx
-RUN touch /var/run/nginx/nginx.pid \
-    && chown www-data:www-data /var/run/nginx.pid \
-    && chown -R www-data:www-data /var/run/nginx/nginx.pid /var/cache/nginx
+RUN chown -R www-data:www-data /var/cache/nginx
+RUN touch /var/run/nginx/nginx.pid 
+RUN chown www-data:www-data /var/run/nginx.pid
+
 
 
 EXPOSE 80 443 
