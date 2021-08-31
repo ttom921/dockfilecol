@@ -41,7 +41,7 @@ RUN cd /tmp/build/nginx/${NGINX_VERSION} && \
         --with-file-aio \ 
 		--with-pcre \
 		--with-pcre-jit \
-		--with-openssl-opt=no-nextprotoneg 
+		--with-openssl-opt=no-nextprotoneg \
         --with-threads \
         --with-http_addition_module \ 
         --with-http_auth_request_module \
