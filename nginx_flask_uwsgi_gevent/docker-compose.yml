@@ -1,13 +1,13 @@
-version: '3.4'
+version: '3.7'
 services:
   webfms2:
     image: webfms:python3.6
     restart: "no"
     #restart: always
-    hostname: webfms2
-    container_name: webfms2
+    hostname: ${WEB_TAG}
+    container_name: ${WEB_TAG}
     ports:
-      - "80:80"
+      - "${PORT}:80"
       #- "443:443"
 
     volumes:
@@ -25,9 +25,26 @@ services:
       - ./docker_config/uwsgi.ini:/app/uwsgi.ini
       - ./docker_config/uwsgi.ini:/etc/uwsgi/uwsgi.ini
       # -----------------log -------------------
-      - /tmp:/var/log/nginx
-      - /tmp:/var/log/supervisor
-      - /tmp:/tmp
+      #- /tmp:/var/log/nginx
+      #- /tmp:/var/log/supervisor
+      #- /tmp:/tmp
+      
+      - type: bind
+        source: /tmp/uwsgi_0.5_${WEB_TAG}.log
+        target: /tmp/uwsgi_0.5.log
+
+      - type: bind
+        source: /tmp/supervisord_${WEB_TAG}.log
+        target: /var/log/supervisor/supervisord.log
+
+      - type: bind
+        source: /tmp/access_${WEB_TAG}.log
+        target: /var/log/nginx/access.log
+
+      - type: bind
+        source: /tmp/error_${WEB_TAG}.log
+        target: /var/log/nginx/error.log
+
 
 
     #ulimits:
