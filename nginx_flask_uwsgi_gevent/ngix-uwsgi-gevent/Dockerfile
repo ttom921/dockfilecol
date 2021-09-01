@@ -106,7 +106,7 @@ COPY supervisord-debian.conf /etc/supervisor/conf.d/supervisord.conf
 RUN mkdir -p /var/log/supervisor
 RUN chown -R www-data:www-data /var/log/supervisor
 RUN touch /var/log/supervisor/supervisord.log
-RUN chmod 775 /var/log/supervisor/supervisord.log
+RUN chmod 777 /var/log/supervisor/supervisord.log
 
 # By default, allow unlimited file sizes, modify it to limit the file sizes
 # To have a maximum of 1 MB (Nginx's default) change the line to:
