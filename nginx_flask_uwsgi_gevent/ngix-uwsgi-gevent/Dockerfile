@@ -35,8 +35,6 @@ RUN cd /tmp/build/nginx/${NGINX_VERSION} && \
         --http-fastcgi-temp-path=/var/cache/nginx/fastcgi_temp \ 
         --http-uwsgi-temp-path=/var/cache/nginx/uwsgi_temp \
         --http-scgi-temp-path=/var/cache/nginx/scgi_temp \
-		--user=www-data \
-        --group=www-data \
         --with-compat \ 
         --with-file-aio \ 
 		--with-pcre \
@@ -73,14 +71,14 @@ RUN ln -sf /dev/stdout /var/log/nginx/access.log && \
     ln -sf /dev/stderr /var/log/nginx/error.log
 
 # Remove default configuration from Nginx
-#RUN rm /etc/nginx/conf.d/default.conf
+RUN rm /etc/nginx/conf.d/default.conf
 
 # 設定nginx的pid權限
-RUN mkdir -p /var/cache/nginx
-RUN chown -R www-data:www-data /var/cache/nginx
-RUN chown -R www-data:www-data /etc/nginx
-RUN touch /var/run/nginx.pid 
-RUN chmod 777 /var/run/nginx.pid
+#RUN mkdir -p /var/cache/nginx
+#RUN chown -R www-data:www-data /var/cache/nginx
+#RUN chown -R www-data:www-data /etc/nginx
+#RUN touch /var/run/nginx.pid 
+#RUN chmod 777 /var/run/nginx.pid
 
 
 
@@ -103,10 +101,10 @@ RUN apt-get update && apt-get install -y supervisor \
 # Custom Supervisord config
 COPY supervisord-debian.conf /etc/supervisor/conf.d/supervisord.conf
 # log 相關 /var/log/supervisor/supervisord.log
-RUN mkdir -p /var/log/supervisor
-RUN chown -R www-data:www-data /var/log/supervisor
-RUN touch /var/log/supervisor/supervisord.log
-RUN chmod 777 /var/log/supervisor/supervisord.log
+#RUN mkdir -p /var/log/supervisor
+#RUN chown -R www-data:www-data /var/log/supervisor
+#RUN touch /var/log/supervisor/supervisord.log
+#RUN chmod 777 /var/log/supervisor/supervisord.log
 
 # By default, allow unlimited file sizes, modify it to limit the file sizes
 # To have a maximum of 1 MB (Nginx's default) change the line to:
