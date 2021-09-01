@@ -102,6 +102,9 @@ RUN apt-get update && apt-get install -y supervisor \
 
 # Custom Supervisord config
 COPY supervisord-debian.conf /etc/supervisor/conf.d/supervisord.conf
+# log 相關 /var/log/supervisor/supervisord.log
+RUN mkdir -p /var/log/supervisor
+RUN chown -R www-data:www-data /var/log/supervisor
 
 # By default, allow unlimited file sizes, modify it to limit the file sizes
 # To have a maximum of 1 MB (Nginx's default) change the line to:
