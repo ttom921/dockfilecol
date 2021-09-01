@@ -71,7 +71,7 @@ RUN ln -sf /dev/stdout /var/log/nginx/access.log && \
     ln -sf /dev/stderr /var/log/nginx/error.log
 
 # Remove default configuration from Nginx
-RUN rm /etc/nginx/conf.d/default.conf
+#RUN rm /etc/nginx/conf.d/default.conf
 
 # 設定nginx的pid權限
 #RUN mkdir -p /var/cache/nginx
