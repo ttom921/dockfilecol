@@ -12,3 +12,11 @@ dockerfile相關的集合
 ## nginx_with_stream
 
 有nginx和stream的docker
+
+## mariadb
+
+10.6 下建立MairaDB Base Image
+
+## mariadb-galera
+
+10.6 建立cluster的MairaDB  Image

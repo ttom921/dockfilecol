@@ -1,0 +1,36 @@
+version: '3.7'
+services:
+  demo-3310:
+    image: ttom921/mariadb:10.6_gc
+    restart: "no"
+    #restart: always
+    #hostname: demo-3310
+    container_name: "demo-3310"
+    network_mode: "host"
+    ports:
+      - "3310:3310"
+    environment:
+      - cluster_name="demo-3310"
+      - my_port="3310"
+      - node1="192.168.38.100"
+      - node2="192.168.38.101"
+      - node3="192.168.38.102"
+      - mysql_user="demo"
+      - mysql_user_password="123456"
+    volumes:
+      # -----------------data -------------------
+      - /data/mariadb-galera:/data/mariadb-galera
+      # -----------------log -------------------
+      #- /tmp:/var/log/nginx
+      #- /tmp:/var/log/supervisor
+      #- /tmp:/tmp
+      
+      #- type: bind
+      #  source: /tmp/uwsgi_0.5_${WEB_TAG}.log
+      #  target: /tmp/uwsgi_0.5.log
+
+      #- type: bind
+      #  source: /tmp/supervisord_${WEB_TAG}.log
+      #  target: /var/log/supervisor/supervisord.log
+
+    
